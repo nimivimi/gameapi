@@ -1,4 +1,5 @@
 package com.hrb.endgame.services;
+import java.util.ArrayList;
 import java.util.List;
 import com.hrb.endgame.models.Register;
 import com.hrb.endgame.vo.RegisterVO;
@@ -14,5 +15,6 @@ public interface IRegisterService {
 	public void setRegisterPoint(String teamName);
 	public List<Register> getAllRegistrations();
 	StatusMessage registerUser(RegisterVO user);
+	public void calculatePoints(ArrayList<String> ansList);
 
 }

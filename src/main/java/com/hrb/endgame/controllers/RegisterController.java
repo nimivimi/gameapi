@@ -61,5 +61,10 @@ public class RegisterController {
 	
 	}
 	
+	@GetMapping("/submitAnswers")
+	public void getListOfAnswers(@RequestBody ArrayList<String> ansList) {
+		register.calculatePoints(ansList);
+	}
+	
 
 }

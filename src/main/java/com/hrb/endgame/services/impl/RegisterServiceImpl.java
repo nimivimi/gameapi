@@ -1,7 +1,9 @@
 package com.hrb.endgame.services.impl;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,6 +152,35 @@ public class RegisterServiceImpl implements IRegisterService{
 		
 	}
 
+	@Override
+	public void calculatePoints(ArrayList<String> ansList) {
+		int points = 0;
+		HashMap<Integer,String> ansMap= getAnsMap();
+		 for(Map.Entry m:ansMap.entrySet()){ 
+			 if(ansList.get((int) m.getKey()).equalsIgnoreCase((String) m.getValue())) {
+				 points++; 
+			 }
+		 }
+		 point.setPoints(points);
+		 pointsDao.save(point);
+		
+		
+	}
+   public HashMap<Integer,String> getAnsMap() {
+	   HashMap<Integer,String> ansList=new HashMap<Integer,String>();
+	   ansList.put(1,"A");    
+	   ansList.put(2,"C");    
+	   ansList.put(3,"B");
+	   ansList.put(4,"A");
+	   ansList.put(5,"D");
+	   ansList.put(6,"B");
+	   ansList.put(7,"B");
+	   ansList.put(8,"A");
+	   ansList.put(9,"D");
+	   ansList.put(10,"C");
+	   
+	return ansList; 
+   }
 
 
 }
