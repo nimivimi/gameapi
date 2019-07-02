@@ -20,6 +20,7 @@ import com.hrb.endgame.models.Register;
 import com.hrb.endgame.dao.RegisterDao;
 import com.hrb.endgame.services.IRegisterService;
 import com.hrb.endgame.services.IValidateSessionService;
+import com.hrb.endgame.vo.QuestionsVO;
 import com.hrb.endgame.vo.RegisterVO;
 import com.hrb.endgame.vo.StatusMessage;
 
@@ -62,8 +63,9 @@ public class RegisterController {
 	}
 	
 	@GetMapping("/submitAnswers")
-	public void getListOfAnswers(@RequestBody ArrayList<String> ansList) {
-		register.calculatePoints(ansList);
+	public StatusMessage getListOfAnswers(@RequestHeader("Authorization") String token,@RequestHeader("Name") String email,
+			@RequestHeader("TeamName") String teamName,@RequestBody ArrayList<QuestionsVO> ansList) {
+		return register.calculatePoints(ansList,teamName);
 	}
 	
 

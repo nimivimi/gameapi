@@ -29,6 +29,7 @@ public class Points {
 	}
 	
 	private String teamName;
+	private boolean triviaSubmitted;
 	
 	private int points;
 
@@ -46,6 +47,12 @@ public class Points {
 	}
 	
 
+	public boolean isTriviaSubmitted() {
+		return triviaSubmitted;
+	}
+	public void setTriviaSubmitted(boolean triviaSubmitted) {
+		this.triviaSubmitted = triviaSubmitted;
+	}
 	public Points() {
 	}
 }

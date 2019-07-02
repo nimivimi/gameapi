@@ -19,6 +19,7 @@ import com.hrb.endgame.dao.LoginDao;
 import com.hrb.endgame.dao.PointsDao;
 import com.hrb.endgame.dao.RegisterDao;
 import com.hrb.endgame.services.IRegisterService;
+import com.hrb.endgame.vo.QuestionsVO;
 import com.hrb.endgame.vo.RegisterVO;
 import com.hrb.endgame.vo.StatusMessage;
 
@@ -152,20 +153,7 @@ public class RegisterServiceImpl implements IRegisterService{
 		
 	}
 
-	@Override
-	public void calculatePoints(ArrayList<String> ansList) {
-		int points = 0;
-		HashMap<Integer,String> ansMap= getAnsMap();
-		 for(Map.Entry m:ansMap.entrySet()){ 
-			 if(ansList.get((int) m.getKey()).equalsIgnoreCase((String) m.getValue())) {
-				 points++; 
-			 }
-		 }
-		 point.setPoints(points);
-		 pointsDao.save(point);
-		
-		
-	}
+	
    public HashMap<Integer,String> getAnsMap() {
 	   HashMap<Integer,String> ansList=new HashMap<Integer,String>();
 	   ansList.put(1,"A");    
@@ -181,6 +169,34 @@ public class RegisterServiceImpl implements IRegisterService{
 	   
 	return ansList; 
    }
+
+@Override
+public StatusMessage calculatePoints(ArrayList<QuestionsVO> ansList,
+		String teamName) {
+	StatusMessage statusMessage = new StatusMessage();	
+	 point = pointsDao.findPointByTeamName(teamName);
+	 int points = 0;
+	 if(!point.isTriviaSubmitted()) {
+		 HashMap<Integer,String> ansMap= getAnsMap();
+		 for(Map.Entry m:ansMap.entrySet()){ 
+			 if(ansList.get((int) m.getKey()).getSelectedChoice()
+					 .equalsIgnoreCase((String) m.getValue())) {
+				 points++; 
+			 } 	 }		 
+	
+	 
+	 point.setTriviaSubmitted(true);	 
+	 point.setPoints(point.getPoints()+points);
+	 pointsDao.save(point);
+	 statusMessage.setMessage("Trivia submitted successfully.");
+	 statusMessage.setStatus("Success");
+	 }else {
+		 statusMessage.setMessage("Trivia already submitted.");
+		 statusMessage.setStatus("Failed");
+	 }
+	
+	return statusMessage;
+}
 
 
 }
