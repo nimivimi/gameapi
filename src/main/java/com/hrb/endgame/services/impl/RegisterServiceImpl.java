@@ -1,5 +1,6 @@
 package com.hrb.endgame.services.impl;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -94,6 +95,7 @@ public class RegisterServiceImpl implements IRegisterService{
 		
 		StatusMessage statusMessage = new StatusMessage();
 		List<Register> registeredUsers=regDao.findAll();
+		registeredUsers.removeAll(Arrays.asList("", null));
 		if(null!=user && null != registeredUsers) {
 			
 			if(isUserExists(user,registeredUsers)) {
